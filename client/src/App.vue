@@ -1,12 +1,26 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <head>
+  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+</head>
+    <div id="nav" class="has-background-light">
+      <Header />
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+// import Menu from './components/layout/Menu'
+import Header from './components/layout/Header'
+export default {
+  name: 'App',
+  components: {
+    Header
+  }
+}
+</script>
 
 <style>
 #app {
