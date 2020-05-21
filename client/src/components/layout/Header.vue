@@ -31,7 +31,7 @@
                      <b-button type="is-primary" v-if="!loggedIn" @click.prevent="showlogin" inverted>Log in</b-button>
                     <b-button type="is-primary" v-if="!loggedIn" @click.prevent="showregister" inverted><strong>Register</strong></b-button>
                      <b-button type="is-primary" v-if="loggedIn" inverted>{{accName}}</b-button>
-                     <b-button type="is-primary" v-if="loggedIn" inverted>Cart</b-button>
+                     <b-button type="is-primary" v-if="loggedIn" @click.prevent="showcart" inverted>Cart</b-button>
                     <b-button type="is-primary" v-if="loggedIn" @click.prevent="logout" inverted><strong>Log Out</strong></b-button>
                 </div>
             </b-navbar-item>
@@ -42,10 +42,10 @@
 <script>
 export default {
   name: 'Header',
-  data(){
-      return{
-          accName : localStorage.accountName
-      }
+  data () {
+    return {
+      accName: localStorage.accountName
+    }
   },
   methods: {
     logout () {
@@ -65,6 +65,9 @@ export default {
       this.$store.state.isLoginRegister = true
       this.$store.commit('SET_ACTIVETAB', 1)
       // this.$store.state.activeTab = 1
+    },
+    showcart () {
+      this.$router.push('/cart')
     }
   },
   computed: {
@@ -73,12 +76,16 @@ export default {
     },
     loggedIn () {
       return this.$store.getters.loggedIn
+    },
+    accName () {
+      return localStorage.accountName
     }
   },
   created () {
     if (localStorage.token) {
       this.$store.commit('SET_LOGIN', true)
       this.loggedIn()
+      // this.accName= localStorage.accountName
     }
   }
 }

@@ -16,7 +16,7 @@
               <hr class="login-hr has-background-black">
                <b-field label="Actions">
             <b-field grouped>
-                
+
                <b-numberinput controls-position="compact"
                 controls-rounded>
             </b-numberinput>
@@ -25,13 +25,13 @@
                 </p>
             </b-field>
         </b-field>
-              
+
             </div>
-            
+
         </div>
       </div>
     </div>
-      
+
     </div>
 </template>
 

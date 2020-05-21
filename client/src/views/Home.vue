@@ -9,7 +9,6 @@
 <script>
 // @ is an alias to /src
 
-
 export default {
   name: 'Home',
   components: {
@@ -17,10 +16,10 @@ export default {
     Banner: () => import('@/components/Banner.vue'),
     LoginRegister: () => import('@/components/LoginRegister.vue')
   },
-  created() {
-    if(localStorage.token){
+  created () {
+    if (localStorage.token) {
       this.$router.push('/menu')
     }
-  },
+  }
 }
 </script>

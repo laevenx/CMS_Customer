@@ -47,25 +47,25 @@
             </div>
         </div>
         </section>
-        
+
     </div>
 </template>
 
 <script>
 export default {
-    name: 'Menu',
-    data(){
-        return {
-            accName : localStorage.accountName
-        }
-    },
-    components:{
-        Banner : () => import('../components/Banner.vue')
-    },
-    methods: {
-        test(){
-            console.log('test')
-        }
-    },
+  name: 'Menu',
+  data () {
+    return {
+      accName: localStorage.accountName
+    }
+  },
+  components: {
+    Banner: () => import('../components/Banner.vue')
+  },
+  methods: {
+    test () {
+      console.log('test')
+    }
+  }
 }
 </script>

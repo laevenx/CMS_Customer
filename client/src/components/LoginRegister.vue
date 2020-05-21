@@ -26,7 +26,7 @@
                             </b-input>
                         </b-field>
 
-                        <b-field label="Password"></b-field>
+                        <b-field label="Password">
                             <b-input
                                 type="password"
                                 :value="password"
@@ -35,7 +35,7 @@
                                 required>
                             </b-input>
                         </b-field>
-
+                        <br>
                         <button class="button is-primary" @click.prevent="login">Login</button>
             </b-tab-item>
             <b-tab-item label="Register">
@@ -47,13 +47,10 @@
             <b-input v-model="last_name"></b-input>
         </b-field>
 
-        <b-field label="Email"
-            type="is-danger"
-            message="This email is invalid">
+        <b-field label="Email">
             <b-input v-model="email"
                 type="email"
-                value="john@"
-                maxlength="30">
+                value="john@">
             </b-input>
         </b-field>
 
@@ -79,7 +76,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 
 export default {
   name: 'LoginRegister',
@@ -101,7 +98,7 @@ export default {
       if (this.email === '') {
         this.$buefy.snackbar.open({
           duration: 5000,
-          message: 'Snackbar with red action, positioned on bottom-left and a callback.<br>Note: <em>Message can include html</em>.',
+          message: 'login completed',
           type: 'is-danger',
           position: 'is-top',
           queue: false
@@ -121,6 +118,7 @@ export default {
       localStorage.setItem('accountName', accountname)
       //       // this.$store.state.loggedIn
       this.$store.commit('SET_LOGIN', true)
+      this.$store.state.isLoginRegister = false
       //       console.log('asdasd loggedIn', this.$store.state.loggedIn)
       //     } else {
       //       console.log('login must with admin account only')
@@ -148,6 +146,13 @@ export default {
         })
         .catch(err => {
           console.log(err.response.data)
+          this.$buefy.snackbar.open({
+            duration: 5000,
+            message: err.response.data.error[0],
+            type: 'is-primary',
+            position: 'is-top',
+            queue: true
+          })
         })
     },
     closemodal () {
