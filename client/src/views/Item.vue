@@ -4,20 +4,22 @@
     <div class="columns">
         <div class="column is-3 is-offset-2">
           <figure class="image is-square">
-            <img src="https://cdn.shopify.com/s/files/1/0419/1525/products/Captain_Brandy_34G2_1024x1024.jpg?v=1583436930" height="480" width="480">
+            <img v-bind:src="item.image_url" height="480" width="480">
           </figure>
         </div>
         <div class="column is-5">
             <div class="box">
-              <h1>Name : asdasdasdasd</h1>
+              <h1>Name : {{item.name}}</h1>
                 <hr class="login-hr has-background-black">
-              <h1>Price : asdasdasdasd</h1>
-              <h1>Stock : asdasdasdasd</h1>
+              <h1>Price : {{item.price}}</h1>
+              <h1>Stock : {{item.stock}}</h1>
               <hr class="login-hr has-background-black">
                <b-field label="Actions">
             <b-field grouped>
 
-               <b-numberinput controls-position="compact"
+               <b-numberinput
+               v-model="stock"
+               controls-position="compact"
                 controls-rounded>
             </b-numberinput>
             <p class="control">
@@ -36,8 +38,42 @@
 </template>
 
 <script>
+import server from '@/api'
+
 export default {
-  name: 'Item'
+  name: 'Item',
+  methods: {
+    addCart () {
+      const newCart = {
+        ProductId: this.id,
+        quantity: this.stock
+      }
+
+      server.post('/cart/add', newCart, {
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(({ data }) => {
+          console.log('new cart added')
+          this.$buefy.toast.open('new cart added')
+          this.$store.commit('ADD_NUMBERCART')
+        })
+        .catch(err => {
+          console.log(err.response.data)
+        })
+    }
+  },
+  computed: {
+    item () {
+      return this.$store.getters.selectItem
+    }
+  },
+  created () {
+    if (!localStorage.token) {
+      this.$router.push('/')
+    }
+  }
 }
 </script>
 

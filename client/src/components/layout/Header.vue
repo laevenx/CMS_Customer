@@ -85,7 +85,7 @@ export default {
     if (localStorage.token) {
       this.$store.commit('SET_LOGIN', true)
       this.loggedIn()
-      accName = localStorage.accountName
+      // accName = localStorage.accountName
       // this.accName= localStorage.accountName
     }
   }

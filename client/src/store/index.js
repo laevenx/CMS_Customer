@@ -11,7 +11,10 @@ export default new Vuex.Store({
     activeTab: 0,
     carts: [],
     products: [],
-    banners: []
+    banners: [],
+    checkout: [],
+    selectItem: {},
+    currentcart: 0
   },
   mutations: {
     SET_LOGIN (state, payload) {
@@ -23,8 +26,26 @@ export default new Vuex.Store({
     SET_PRODUCTS (state, payload) {
       state.products = payload
     },
-    SET_BANNERS(state,payload){
+    SET_BANNERS (state, payload) {
       state.banners = payload
+    },
+    SET_SELECTITEM (state, payload) {
+      state.selectItem = payload
+    },
+    ADD_NUMBERCART (state, payload) {
+      state.currentcart = state.currentcart + 1
+    },
+    RESET_NUMBERCART (state, payload) {
+      state.currentcart = 0
+    },
+    REMOVE_NUMBERCART (state, payload) {
+      state.currentcart = state.currentcart - 1
+    },
+    SET_NUMBERCART (state, payload) {
+      state.currentcart = payload
+    },
+    SET_CHECKOUT (state, payload) {
+      state.checkout = payload
     }
   },
   actions: {
@@ -82,14 +103,42 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           console.log('banners', data.data)
-          let payload = data.data
-          for(let i=0;i < payload.length ; i++){
+          const payload = data.data
+          for (let i = 0; i < payload.length; i++) {
             payload[i].image = payload[i].image_url
           }
           commit('SET_BANNERS', payload)
         })
         .catch(err => {
           console.log(err.response)
+        })
+    },
+    loadItem ({ commit, state }, id) {
+      server.get(`/products/${id}`, {
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(({ data }) => {
+          commit('SET_SELECTITEM', data)
+        })
+        .catch(err => {
+          console.log(err.response)
+        })
+    },
+    loadCheckout ({ commit, state }) {
+      server.get('/cart/checkout', {
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(({ data }) => {
+          const payload = data.data
+          commit('SET_NUMBERCART', payload.length)
+          commit('SET_CHECKOUT', payload)
+        })
+        .catch(err => {
+          console.log(err.response.data.error)
         })
     }
   },
@@ -101,6 +150,8 @@ export default new Vuex.Store({
     activeTab: state => state.activeTab,
     products: state => state.products,
     carts: state => state.carts,
-    banners: state => state.banners
+    banners: state => state.banners,
+    selectItem: state => state.selectItem,
+    currentcart: state => state.currentcart
   }
 })

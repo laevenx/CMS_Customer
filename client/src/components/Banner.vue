@@ -11,7 +11,7 @@
                 <img :src="item.image" style="width:500px;height:350px;">
             </figure>
         </b-carousel-item>
-        <span v-if="gallery" @click="switchGallery(false)" class="modal-close is-large"/>
+        <span v-if="gallery" @click="switchGallery(false)" class="modal-close is-small"/>
         <template slot="list" slot-scope="props">
             <b-carousel-list
                 v-model="values"
@@ -36,7 +36,7 @@ export default {
   data () {
     return {
       gallery: false,
-      values:1,
+      values: 1,
       al: {
         hasGrayscale: true,
         itemsToShow: 2,
@@ -50,7 +50,7 @@ export default {
             itemsToShow: 6
           }
         }
-      },
+      }
       // items: [
       //   {
       //     title: 'Slide 1',
@@ -97,14 +97,14 @@ export default {
       }
     }
   },
-  created() {
+  created () {
     this.$store.dispatch('fetchBanners')
   },
   computed: {
-    items(){
+    items () {
       // console.log()
       return this.$store.getters.banners
     }
-  },
+  }
 }
 </script>
