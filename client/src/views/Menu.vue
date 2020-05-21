@@ -5,11 +5,11 @@
         <section class="section" style="">
         <div class="columns">
             <div class="column "  @click.prevent="">
-                <div class="box" width="200" height="200" @click.prevent="test">
-                    asdasdasdasd<br>
+                <div v-for="(product,i) in products" :key="i"  class="box" width="200" height="200" @click.prevent="test">
+                    {{product.name}}<br>
                     <img src="https://images-na.ssl-images-amazon.com/images/I/412jWjEIzKL._AC_SX425_.jpg"><br>
-                    price:12000<br>
-                    stock:12
+                    price:{{product.price}}<br>
+                    stock:{{product.stock}}
                 </div>
 
             </div>
@@ -66,6 +66,15 @@ export default {
     test () {
       console.log('test')
     }
-  }
+  },
+  created() {
+    this.$store.dispatch('fetchProducts')
+    // this.$store.dispatch('fetchCategory')
+  },
+  computed: {
+    products (){
+      return this.$store.getters.products
+    }
+  },
 }
 </script>

@@ -45,11 +45,37 @@ import server from '@/api'
 
 export default {
   name: 'Cart',
+  data(){
+    return {
+      data: []
+    }
+  },
   methods: {
     showdelete (id) {
-
+      server.delete(`/cart/delete/${id}`, {
+        headers: {
+          token: localStorage.token
+        }
+      })
     }
-  }
+  },
+  created() {
+    server.get('/cart/checkout',{
+      headers: {
+        token: localStorage.token
+      }
+    })
+    .then(({data}) => {
+      console.log(data)
+        this.check = data
+    })
+    .catch(err => {
+      console.log(err.response.data.error)
+    })
+  },
+  computed: {
+
+  },
 }
 </script>
 

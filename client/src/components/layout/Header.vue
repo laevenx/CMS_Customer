@@ -44,7 +44,7 @@ export default {
   name: 'Header',
   data () {
     return {
-      accName: localStorage.accountName
+
     }
   },
   methods: {
@@ -85,6 +85,7 @@ export default {
     if (localStorage.token) {
       this.$store.commit('SET_LOGIN', true)
       this.loggedIn()
+      accName= localStorage.accountName
       // this.accName= localStorage.accountName
     }
   }

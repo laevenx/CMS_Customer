@@ -21,6 +21,7 @@
                             <b-input
                                 type="email"
                                 :value="email"
+                                v-model="loginemail"
                                 placeholder="Your email"
                                 required>
                             </b-input>
@@ -30,6 +31,7 @@
                             <b-input
                                 type="password"
                                 :value="password"
+                                v-model="loginpassword"
                                 password-reveal
                                 placeholder="Your password"
                                 required>
@@ -90,46 +92,61 @@ export default {
     login () {
       // console.log('test')
 
-      const data = {
-        email: this.email,
-        password: this.password
+      let data = {
+        email: this.loginemail,
+        password: this.loginpassword
       }
 
-      if (this.email === '') {
-        this.$buefy.snackbar.open({
-          duration: 5000,
-          message: 'login completed',
-          type: 'is-danger',
-          position: 'is-top',
-          queue: false
+      // if (this.email === '') {
+      //   this.$buefy.snackbar.open({
+      //     duration: 5000,
+      //     message: 'login completed',
+      //     type: 'is-danger',
+      //     position: 'is-top',
+      //     queue: false
+      //   })
+      // }
+      console.log(data)
+      this.$store.dispatch('login', data)
+        .then(({ data }) => {
+          console.log(data)
+          if (data.roles === 'costumer') {
+            console.log('masuk')
+            
+            let token = data.token
+            // token = 'asdweaf3q4trqefearf'
+            let accountname = `${data.first_name} ${data.last_name}`
+            // accountname = 'sleeep asd'
+            localStorage.setItem('token', token)
+            localStorage.setItem('accountName', accountname)
+            this.$store.commit('SET_LOGIN', true)
+            this.$store.state.isLoginRegister = false
+            this.$router.push('/menu')
+            console.log('asdasd loggedIn', this.$store.state.loggedIn)
+          } else {
+            console.log('login must with costumer account only')
+            this.$buefy.snackbar.open({
+            duration: 5000,
+            message: 'login must with costumer account only',
+            type: 'is-primary',
+            position: 'is-top',
+            queue: true
+          })
+          }
+
+          // this.$store.state.loggedIn = true
+          
         })
-      }
-      // this.$store.dispatch('login', data)
-      //   .then(({ data }) => {
-      //     console.log(data)
-      //     if (data.roles === 'costumer') {
-      console.log('masuk')
-      this.$router.push('/menu')
-      let token = data.token
-      token = 'asdweaf3q4trqefearf'
-      let accountname = `${data.first_name} ${data.last_name}`
-      accountname = 'sleeep asd'
-      localStorage.setItem('token', token)
-      localStorage.setItem('accountName', accountname)
-      //       // this.$store.state.loggedIn
-      this.$store.commit('SET_LOGIN', true)
-      this.$store.state.isLoginRegister = false
-      //       console.log('asdasd loggedIn', this.$store.state.loggedIn)
-      //     } else {
-      //       console.log('login must with admin account only')
-      //     }
-
-      // this.$store.state.loggedIn = true
-      // this.$router.push({ name: 'Menu' })
-      // })
-      // .catch(err => {
-      //   console.log(err.response.data)
-      // })
+        .catch(err => {
+          console.log(err.response.data)
+          this.$buefy.snackbar.open({
+            duration: 5000,
+            message: err.response.data.error,
+            type: 'is-primary',
+            position: 'is-top',
+            queue: true
+          })
+        })
     },
     register () {
       const newUser = {
@@ -142,7 +159,7 @@ export default {
 
       this.$store.dispatch('register', newUser)
         .then(({ data }) => {
-          this.$router.push('/')
+          this.$store.state.activeTab = 0
         })
         .catch(err => {
           console.log(err.response.data)

@@ -10,7 +10,8 @@ export default new Vuex.Store({
     loggedIn: false,
     activeTab: 0,
     carts: [],
-    Products: []
+    products: [],
+    banners: []
   },
   mutations: {
     SET_LOGIN (state, payload) {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     },
     SET_ACTIVETAB (state, payload) {
       state.activeTab = payload
+    },
+    SET_PRODUCTS (state,payload){
+      state.products = payload
     }
   },
   actions: {
@@ -36,8 +40,50 @@ export default new Vuex.Store({
         last_name: payload.last_name,
         email: payload.email,
         password: payload.password,
-        roles: payload.roles
+        roles: 'costumer'
       })
+    },
+    fetchProducts ({ commit }) {
+      return server.get('/products/list', {
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(({ data }) => {
+          console.log('products', data.data)
+          commit('SET_PRODUCTS', data.data)
+        })
+        .catch(err => {
+          console.log(err.response)
+        })
+    },
+    fetchCart ({ commit, state }) {
+      return server.get('/cart/list', {
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(({ data }) => {
+          console.log('cart', data.data)
+          commit('SET_CARTS', data.data)
+        })
+        .catch(err => {
+          console.log(err.response)
+        })
+    },
+    fetchBanners ({ commit, state }) {
+      return server.get('/banner/list', {
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(({ data }) => {
+          console.log('banners', data.data)
+          commit('SET_BANNERS', data.data)
+        })
+        .catch(err => {
+          console.log(err.response)
+        })
     }
   },
   modules: {
@@ -45,6 +91,9 @@ export default new Vuex.Store({
   getters: {
     loggedIn: state => state.loggedIn,
     isLoginRegister: state => state.isLoginRegister,
-    activeTab: state => state.activeTab
+    activeTab: state => state.activeTab,
+    products: state => state.products,
+    carts: state => state.carts,
+    banners: state => state.banners
   }
 })
