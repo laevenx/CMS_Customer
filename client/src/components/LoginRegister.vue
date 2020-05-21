@@ -92,7 +92,7 @@ export default {
     login () {
       // console.log('test')
 
-      let data = {
+      const data = {
         email: this.loginemail,
         password: this.loginpassword
       }
@@ -112,10 +112,10 @@ export default {
           console.log(data)
           if (data.roles === 'costumer') {
             console.log('masuk')
-            
-            let token = data.token
+
+            const token = data.token
             // token = 'asdweaf3q4trqefearf'
-            let accountname = `${data.first_name} ${data.last_name}`
+            const accountname = `${data.first_name} ${data.last_name}`
             // accountname = 'sleeep asd'
             localStorage.setItem('token', token)
             localStorage.setItem('accountName', accountname)
@@ -126,16 +126,15 @@ export default {
           } else {
             console.log('login must with costumer account only')
             this.$buefy.snackbar.open({
-            duration: 5000,
-            message: 'login must with costumer account only',
-            type: 'is-primary',
-            position: 'is-top',
-            queue: true
-          })
+              duration: 5000,
+              message: 'login must with costumer account only',
+              type: 'is-primary',
+              position: 'is-top',
+              queue: true
+            })
           }
 
           // this.$store.state.loggedIn = true
-          
         })
         .catch(err => {
           console.log(err.response.data)

@@ -20,8 +20,11 @@ export default new Vuex.Store({
     SET_ACTIVETAB (state, payload) {
       state.activeTab = payload
     },
-    SET_PRODUCTS (state,payload){
+    SET_PRODUCTS (state, payload) {
       state.products = payload
+    },
+    SET_BANNERS(state,payload){
+      state.banners = payload
     }
   },
   actions: {
@@ -79,7 +82,11 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           console.log('banners', data.data)
-          commit('SET_BANNERS', data.data)
+          let payload = data.data
+          for(let i=0;i < payload.length ; i++){
+            payload[i].image = payload[i].image_url
+          }
+          commit('SET_BANNERS', payload)
         })
         .catch(err => {
           console.log(err.response)

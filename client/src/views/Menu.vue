@@ -3,47 +3,26 @@
         <Banner />
         <h1 class="is-size-4">welcome, {{accName}}</h1>
         <section class="section" style="">
-        <div class="columns">
-            <div class="column "  @click.prevent="">
-                <div v-for="(product,i) in products" :key="i"  class="box" width="200" height="200" @click.prevent="test">
+        <div class="columns" style="padding:2%;">
+            <div class="column is-2" v-for="(product,i) in products.slice(0,5)" :key="i"  @click.prevent="" >
+                <div   class="box" width="200" height="200">
                     {{product.name}}<br>
-                    <img src="https://images-na.ssl-images-amazon.com/images/I/412jWjEIzKL._AC_SX425_.jpg"><br>
+                    <img v-bind:src="product.image_url" width="128" height="128"><br>
                     price:{{product.price}}<br>
                     stock:{{product.stock}}
                 </div>
 
             </div>
-            <div class="column ">
-                <div class="box" width="200" height="200">
-                     asdasdasdasd<br>
-                    <img src="https://images-na.ssl-images-amazon.com/images/I/412jWjEIzKL._AC_SX425_.jpg"><br>
-                    price:12000<br>
-                    stock:12
-                </div>
             </div>
-            <div class="column ">
-                <div class="box" width="200" height="200">
-                     asdasdasd<br>
-                    <img src="https://images-na.ssl-images-amazon.com/images/I/412jWjEIzKL._AC_SX425_.jpg"><br>
-                    price:12000<br>
-                    stock:12
+        <div v-for="x in products.length/5" class="columns" style="padding:2%;">
+            <div class="column is-2" v-for="(product,i) in products.slice((x*5),((x*5)+5))" :key="i"  @click.prevent="" >
+                <div   class="box" width="200" height="200">
+                    {{product.name}}<br>
+                    <img v-bind:src="product.image_url" width="128" height="128"><br>
+                    price:{{product.price}}<br>
+                    stock:{{product.stock}}
                 </div>
-            </div>
-            <div class="column ">
-                <div class="box" width="200" height="200">
-                     asdasdasdasdasd<br>
-                    <img src="https://images-na.ssl-images-amazon.com/images/I/412jWjEIzKL._AC_SX425_.jpg"><br>
-                    price:12000<br>
-                    stock:12
-                </div>
-            </div>
-            <div class="column ">
-                <div class="box" width="200" height="200">
-                     "asdasdasdas"<br>
-                    <img src="https://images-na.ssl-images-amazon.com/images/I/412jWjEIzKL._AC_SX425_.jpg"><br>
-                    price:12000<br>
-                    stock:12
-                </div>
+
             </div>
         </div>
         </section>
@@ -67,14 +46,14 @@ export default {
       console.log('test')
     }
   },
-  created() {
+  created () {
     this.$store.dispatch('fetchProducts')
     // this.$store.dispatch('fetchCategory')
   },
   computed: {
-    products (){
+    products () {
       return this.$store.getters.products
     }
-  },
+  }
 }
 </script>

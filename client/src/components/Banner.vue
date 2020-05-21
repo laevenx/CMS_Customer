@@ -8,13 +8,13 @@
         width="800">
         <b-carousel-item v-for="(item, i) in items" :key="i">
             <figure @click="switchGallery(true)" class="image">
-                <img :src="item.image">
+                <img :src="item.image" style="width:500px;height:350px;">
             </figure>
         </b-carousel-item>
         <span v-if="gallery" @click="switchGallery(false)" class="modal-close is-large"/>
         <template slot="list" slot-scope="props">
             <b-carousel-list
-                v-model="props.active"
+                v-model="values"
                 :data="items"
                 :config="al"
                 :refresh="gallery"
@@ -36,6 +36,7 @@ export default {
   data () {
     return {
       gallery: false,
+      values:1,
       al: {
         hasGrayscale: true,
         itemsToShow: 2,
@@ -50,40 +51,40 @@ export default {
           }
         }
       },
-      items: [
-        {
-          title: 'Slide 1',
-          image: 'https://picsum.photos/id/0/1230/500'
-        },
-        {
-          title: 'Slide 2',
-          image: 'https://picsum.photos/id/1/1230/500'
-        },
-        {
-          title: 'Slide 3',
-          image: 'https://picsum.photos/id/2/1230/500'
-        },
-        {
-          title: 'Slide 4',
-          image: 'https://picsum.photos/id/3/1230/500'
-        },
-        {
-          title: 'Slide 5',
-          image: 'https://picsum.photos/id/4/1230/500'
-        },
-        {
-          title: 'Slide 6',
-          image: 'https://picsum.photos/id/5/1230/500'
-        },
-        {
-          title: 'Slide 7',
-          image: 'https://picsum.photos/id/6/1230/500'
-        },
-        {
-          title: 'Slide 8',
-          image: 'https://picsum.photos/id/7/1230/500'
-        }
-      ]
+      // items: [
+      //   {
+      //     title: 'Slide 1',
+      //     image: 'https://picsum.photos/id/0/1230/500'
+      //   },
+      //   {
+      //     title: 'Slide 2',
+      //     image: 'https://picsum.photos/id/1/1230/500'
+      //   },
+      //   {
+      //     title: 'Slide 3',
+      //     image: 'https://picsum.photos/id/2/1230/500'
+      //   },
+      //   {
+      //     title: 'Slide 4',
+      //     image: 'https://picsum.photos/id/3/1230/500'
+      //   },
+      //   {
+      //     title: 'Slide 5',
+      //     image: 'https://picsum.photos/id/4/1230/500'
+      //   },
+      //   {
+      //     title: 'Slide 6',
+      //     image: 'https://picsum.photos/id/5/1230/500'
+      //   },
+      //   {
+      //     title: 'Slide 7',
+      //     image: 'https://picsum.photos/id/6/1230/500'
+      //   },
+      //   {
+      //     title: 'Slide 8',
+      //     image: 'https://picsum.photos/id/7/1230/500'
+      //   }
+      // ]
     }
   },
   methods: {
@@ -95,6 +96,15 @@ export default {
         return document.documentElement.classList.remove('is-clipped')
       }
     }
-  }
+  },
+  created() {
+    this.$store.dispatch('fetchBanners')
+  },
+  computed: {
+    items(){
+      // console.log()
+      return this.$store.getters.banners
+    }
+  },
 }
 </script>
