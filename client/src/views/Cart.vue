@@ -43,7 +43,7 @@
       </div>
     </div>
     <div class="column" style="margin: 15px;">
-              <b-button size="is-large"><b-icon
+              <b-button size="is-large" @click.prevent="showcheckout"><b-icon
                 icon="cart"
                 size="is-medium"></b-icon>Checkout<b-icon
                 icon="cart"
@@ -67,6 +67,25 @@
 
                     
         </b-modal>
+
+        <b-modal :active.sync="isCheckoutModalActive" :width="320" scroll="keep">
+            <div class="modal-card" style="width: auto">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">Confirm Checkout</p>
+                    </header>
+                    <section class="modal-card-body">
+                        Are You Sure Checkout ?
+                    </section>
+                    <footer class="modal-card-foot">
+                        <button class="button is-primary" @click.prevent="checkoutconfirm"><b-icon
+                icon="cart"
+                size="is-small">
+            </b-icon><span>Checkout</span></button>
+                    </footer>
+                </div>
+
+                    
+        </b-modal>
     </div>
 </template>
 
@@ -78,6 +97,7 @@ export default {
   data(){
     return{
       isCardModalActive: false,
+      isCheckoutModalActive: false,
       deleteItem: '',
       selectId: 0
     }
@@ -103,6 +123,42 @@ export default {
       .catch(err => {
         this.$buefy.toast.open(err.response.data.error)
       })
+    },
+    showcheckout(){
+      this.isCheckoutModalActive= true
+    },
+    checkoutconfirm(){
+      let data = this.$store.getters.checkout
+      let promises = []
+      let id = 0
+      for(let i=0; i<data.length;i++){
+        promises.push(
+           server.put(`/cart/confirm/${data[i].id}`,{
+              headers: {
+                token : localStorage.token
+              },
+              params:{
+                id: data[i].id
+              }
+            })
+        )
+      }
+      console.log(promises)
+
+      Promise.all(promises)
+              .then(data => {
+                this.$buefy.toast.open('checkout completed, thank you for purchase')
+                this.isCheckoutModalActive= false
+                this.$store.dispatch('loadCheckout')
+              })
+      // server.put(`/cart/confirm/${id}`, data,{
+      //   headers: {
+      //     token : localStorage.token
+      //   }
+      // })
+      //   .catch(err => {
+      //     this.$buefy.toast.open(err.response.data.error)
+      //   })
     }
   },
   created () {
