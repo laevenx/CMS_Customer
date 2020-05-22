@@ -34,13 +34,13 @@ export default new Vuex.Store({
       state.selectItem = payload
     },
     ADD_NUMBERCART (state, payload) {
-      state.numbercart = state.currentcart + 1
+      state.numbercart++
     },
     RESET_NUMBERCART (state, payload) {
       state.numbercart = 0
     },
-    REMOVE_NUMBERCART (state, payload) {
-      state.numbercart = state.currentcart - 1
+    MINUS_NUMBERCART (state, payload) {
+      state.numbercart--
     },
     SET_NUMBERCART (state, payload) {
       state.numbercart = payload

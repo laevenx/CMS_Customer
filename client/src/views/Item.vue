@@ -80,6 +80,7 @@ export default {
     if (!localStorage.token) {
       this.$router.push('/')
     }
+    this.$store.dispatch('loadItem', localStorage.itemId)
   }
 }
 </script>

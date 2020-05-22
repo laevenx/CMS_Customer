@@ -48,6 +48,7 @@ export default {
   },
   methods: {
     showItemDetail (id) {
+      localStorage.setItem('itemId',id)
       this.$store.dispatch('loadItem', id)
       this.$router.push('/item')
     }

@@ -115,6 +115,7 @@ export default {
       })
         .then(({ data }) => {
           this.$store.dispatch('loadCheckout')
+          this.$store.commit('MINUS_NUMBERCART')
           this.$buefy.toast.open('delete completed')
           this.isCardModalActive = false
         })
