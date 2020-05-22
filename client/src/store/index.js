@@ -143,6 +143,7 @@ export default new Vuex.Store({
         })
     },
     calculateNumberCart ({ commit, state }) {
+      console.log('carts', state.carts)
       commit('SET_NUMBERCART', state.carts.length)
     }
   },
@@ -156,7 +157,7 @@ export default new Vuex.Store({
     carts: state => state.carts,
     banners: state => state.banners,
     selectItem: state => state.selectItem,
-    currentcart: state => state.currentcart,
+    numbercart: state => state.numbercart,
     accName: state => state.accName,
     checkout: state => state.checkout
   }

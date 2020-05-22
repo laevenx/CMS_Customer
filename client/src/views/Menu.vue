@@ -54,6 +54,7 @@ export default {
   },
   created () {
     this.$store.dispatch('fetchProducts')
+    this.$store.dispatch('loadCheckout')
     // this.$store.dispatch('fetchCategory')
   },
   computed: {

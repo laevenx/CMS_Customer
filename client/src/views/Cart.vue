@@ -126,12 +126,13 @@ export default {
       this.isCheckoutModalActive = true
     },
     checkoutconfirm () {
+      
       const data = this.$store.getters.checkout
       const promises = []
       const id = 0
       for (let i = 0; i < data.length; i++) {
         promises.push(
-          server.put(`/cart/confirm/${data[i].id}`, {
+          server.put(`/cart/confirm/${data[i].id}`,null, {
             headers: {
               token: localStorage.token
             },
@@ -144,18 +145,35 @@ export default {
       console.log(promises)
 
       Promise.all(promises)
-        .then(data => {
-          this.$buefy.toast.open('checkout completed, thank you for purchase')
-          this.isCheckoutModalActive = false
-          this.$store.dispatch('loadCheckout')
-        })
-      // server.put(`/cart/confirm/${id}`, data,{
+      .then(data => {
+            this.$buefy.toast.open('checkout completed, thank you for purchase')
+            this.isCheckoutModalActive = false
+            this.$store.dispatch('loadCheckout')
+          })
+
+      // for (let i = 0; i < promises.length; i++) {
+      //     await fetchItem(promises[i])
+      // }
+
+      // Promise.all(promises.reduce((p, fn) => p.then(fn), Promise.resolve()))
+      //   .then(data => {
+      //     this.$buefy.toast.open('checkout completed, thank you for purchase')
+      //     this.isCheckoutModalActive = false
+      //     this.$store.dispatch('loadCheckout')
+      //   })
+      // console.log(localStorage.token)
+      // server.put('/cart/confirm/10', null,{
       //   headers: {
-      //     token : localStorage.token
+      //     token: localStorage.token
       //   }
       // })
+      //   .then(data => {
+      //       this.$buefy.toast.open('checkout completed, thank you for purchase')
+      //       this.isCheckoutModalActive = false
+      //       this.$store.dispatch('loadCheckout')
+      //     })
       //   .catch(err => {
-      //     this.$buefy.toast.open(err.response.data.error)
+      //     this.$buefy.toast.open(err.response.data)
       //   })
     }
   },
