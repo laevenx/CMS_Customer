@@ -20,10 +20,17 @@
                <b-numberinput
                v-model="stock"
                controls-position="compact"
-                controls-rounded>
+                controls-rounded
+                min="1"
+                v-bind:max="item.stock">
             </b-numberinput>
             <p class="control">
-                    <button class="button">Checkout</button>
+                   
+                    <button class="button is-medium" @click.prevent="addCart(item.id)"><b-icon
+                icon="cart"
+                size="is-medium"></b-icon>
+                
+            <span>add Cart</span></button>
                 </p>
             </b-field>
         </b-field>
@@ -43,9 +50,9 @@ import server from '@/api'
 export default {
   name: 'Item',
   methods: {
-    addCart () {
+    addCart (id) {
       const newCart = {
-        ProductId: this.id,
+        ProductId: id,
         quantity: this.stock
       }
 

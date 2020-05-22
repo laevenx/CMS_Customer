@@ -8,7 +8,7 @@
         width="800">
         <b-carousel-item v-for="(item, i) in items" :key="i">
             <figure @click="switchGallery(true)" class="image">
-                <img :src="item.image" style="width:500px;height:350px;">
+                <img :src="item.image" style="width:500px;height:350px;resize:auto;">
             </figure>
         </b-carousel-item>
         <span v-if="gallery" @click="switchGallery(false)" class="modal-close is-small"/>

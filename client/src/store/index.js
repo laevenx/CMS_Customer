@@ -6,6 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    accName: '',
     isLoginRegister: false,
     loggedIn: false,
     activeTab: 0,
@@ -152,6 +153,8 @@ export default new Vuex.Store({
     carts: state => state.carts,
     banners: state => state.banners,
     selectItem: state => state.selectItem,
-    currentcart: state => state.currentcart
+    currentcart: state => state.currentcart,
+    accName: state => state.accName,
+    checkout: state => state.checkout
   }
 })

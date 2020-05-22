@@ -16,7 +16,7 @@
             </a>
             </div>
             </div>
-        <div v-for="x in products.length/5" class="columns" style="padding:2%;">
+        <div v-for="x in maxRow" class="columns" style="padding:2%;">
             <div class="column is-1"></div>
             <div class="column is-2" v-for="(product,i) in products.slice((x*5),((x*5)+5))" :key="i">
             <a   @click.prevent="showItemDetail(product.id)" >
@@ -59,6 +59,11 @@ export default {
   computed: {
     products () {
       return this.$store.getters.products
+    },
+    maxRow(){
+      const products = this.$store.getters.products
+      // console.log(products.length/5)
+      return Math.ceil(products.length/5)
     }
   }
 }
