@@ -15,7 +15,7 @@ export default new Vuex.Store({
     banners: [],
     checkout: [],
     selectItem: {},
-    currentcart: 0
+    numbercart: 0
   },
   mutations: {
     SET_LOGIN (state, payload) {
@@ -34,16 +34,16 @@ export default new Vuex.Store({
       state.selectItem = payload
     },
     ADD_NUMBERCART (state, payload) {
-      state.currentcart = state.currentcart + 1
+      state.numbercart = state.currentcart + 1
     },
     RESET_NUMBERCART (state, payload) {
-      state.currentcart = 0
+      state.numbercart = 0
     },
     REMOVE_NUMBERCART (state, payload) {
-      state.currentcart = state.currentcart - 1
+      state.numbercart = state.currentcart - 1
     },
     SET_NUMBERCART (state, payload) {
-      state.currentcart = payload
+      state.numbercart = payload
     },
     SET_CHECKOUT (state, payload) {
       state.checkout = payload
@@ -141,6 +141,9 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err.response.data.error)
         })
+    },
+    calculateNumberCart ({ commit, state }) {
+      commit('SET_NUMBERCART', state.carts.length)
     }
   },
   modules: {

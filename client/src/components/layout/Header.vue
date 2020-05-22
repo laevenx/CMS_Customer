@@ -3,8 +3,8 @@
         <template slot="brand">
             <b-navbar-item tag="router-link" :to="{ path: '/' }">
                 <img
-                    src="https://raw.githubusercontent.com/buefy/buefy/dev/static/img/buefy-logo.png"
-                    alt="Lightweight UI components for Vue.js based on Bulma"
+                    src="@/assets/e-commerce.png"
+                    alt="e-commerce"
                 >
             </b-navbar-item>
         </template>
@@ -31,7 +31,7 @@
                      <b-button type="is-primary" v-if="!loggedIn" @click.prevent="showlogin" inverted>Log in</b-button>
                     <b-button type="is-primary" v-if="!loggedIn" @click.prevent="showregister" inverted><strong>Register</strong></b-button>
                      <b-button type="is-primary" v-if="loggedIn" inverted>{{accName}}</b-button>
-                     <b-button type="is-primary" v-if="loggedIn" @click.prevent="showcart" inverted>Cart</b-button>
+                     <b-button type="is-primary" v-if="loggedIn" @click.prevent="showcart" inverted>Cart {{numberCart}}</b-button>
                     <b-button type="is-primary" v-if="loggedIn" @click.prevent="logout" inverted><strong>Log Out</strong></b-button>
                 </div>
             </b-navbar-item>
@@ -67,6 +67,7 @@ export default {
       // this.$store.state.activeTab = 1
     },
     showcart () {
+      this.$store.dispatch('loadCheckout')
       this.$router.push('/cart')
     }
   },
@@ -79,11 +80,15 @@ export default {
     },
     accName () {
       return localStorage.accountName
+    },
+    numberCart () {
+      return this.$store.getters.numbercart
     }
   },
   created () {
     if (localStorage.token) {
       this.$store.commit('SET_LOGIN', true)
+      this.$store.dispatch('calculateNumberCart')
       this.loggedIn()
       // accName = localStorage.accountName
       // this.accName= localStorage.accountName

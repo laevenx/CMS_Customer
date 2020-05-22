@@ -25,11 +25,11 @@
                 v-bind:max="item.stock">
             </b-numberinput>
             <p class="control">
-                   
+
                     <button class="button is-medium" @click.prevent="addCart(item.id)"><b-icon
                 icon="cart"
                 size="is-medium"></b-icon>
-                
+
             <span>add Cart</span></button>
                 </p>
             </b-field>

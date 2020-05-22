@@ -65,7 +65,6 @@
                     </footer>
                 </div>
 
-                    
         </b-modal>
 
         <b-modal :active.sync="isCheckoutModalActive" :width="320" scroll="keep">
@@ -84,7 +83,6 @@
                     </footer>
                 </div>
 
-                    
         </b-modal>
     </div>
 </template>
@@ -94,8 +92,8 @@ import server from '@/api'
 
 export default {
   name: 'Cart',
-  data(){
-    return{
+  data () {
+    return {
       isCardModalActive: false,
       isCheckoutModalActive: false,
       deleteItem: '',
@@ -103,54 +101,54 @@ export default {
     }
   },
   methods: {
-    showdelete(id,name){
-        this.isCardModalActive= true
-        this.deleteItem = name
-        this.selectId = id
+    showdelete (id, name) {
+      this.isCardModalActive = true
+      this.deleteItem = name
+      this.selectId = id
     },
-    deleteconfirm(id) {
+    deleteconfirm (id) {
       console.log('deleted')
       server.delete(`/cart/delete/${id}`, {
         headers: {
           token: localStorage.token
         }
       })
-      .then(({data}) => {
-        this.$store.dispatch('loadCheckout')
-        this.$buefy.toast.open('delete completed')
-        this.isCardModalActive= false
-      })
-      .catch(err => {
-        this.$buefy.toast.open(err.response.data.error)
-      })
+        .then(({ data }) => {
+          this.$store.dispatch('loadCheckout')
+          this.$buefy.toast.open('delete completed')
+          this.isCardModalActive = false
+        })
+        .catch(err => {
+          this.$buefy.toast.open(err.response.data.error)
+        })
     },
-    showcheckout(){
-      this.isCheckoutModalActive= true
+    showcheckout () {
+      this.isCheckoutModalActive = true
     },
-    checkoutconfirm(){
-      let data = this.$store.getters.checkout
-      let promises = []
-      let id = 0
-      for(let i=0; i<data.length;i++){
+    checkoutconfirm () {
+      const data = this.$store.getters.checkout
+      const promises = []
+      const id = 0
+      for (let i = 0; i < data.length; i++) {
         promises.push(
-           server.put(`/cart/confirm/${data[i].id}`,{
-              headers: {
-                token : localStorage.token
-              },
-              params:{
-                id: data[i].id
-              }
-            })
+          server.put(`/cart/confirm/${data[i].id}`, {
+            headers: {
+              token: localStorage.token
+            },
+            params: {
+              id: data[i].id
+            }
+          })
         )
       }
       console.log(promises)
 
       Promise.all(promises)
-              .then(data => {
-                this.$buefy.toast.open('checkout completed, thank you for purchase')
-                this.isCheckoutModalActive= false
-                this.$store.dispatch('loadCheckout')
-              })
+        .then(data => {
+          this.$buefy.toast.open('checkout completed, thank you for purchase')
+          this.isCheckoutModalActive = false
+          this.$store.dispatch('loadCheckout')
+        })
       // server.put(`/cart/confirm/${id}`, data,{
       //   headers: {
       //     token : localStorage.token
@@ -165,8 +163,8 @@ export default {
     this.$store.dispatch('loadCheckout')
   },
   computed: {
-    checks(){
-        return this.$store.getters.checkout
+    checks () {
+      return this.$store.getters.checkout
     }
   }
 }

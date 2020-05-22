@@ -60,10 +60,10 @@ export default {
     products () {
       return this.$store.getters.products
     },
-    maxRow(){
+    maxRow () {
       const products = this.$store.getters.products
       // console.log(products.length/5)
-      return Math.ceil(products.length/5)
+      return Math.ceil(products.length / 5)
     }
   }
 }
