@@ -1,7 +1,24 @@
 <template>
     <div>
         <Banner />
+        
+        
         <h1 class="is-size-4">welcome, {{accName}}</h1>
+        <hr>
+        <div class="columns">
+          <div class="column is-half is-offset-3">
+          <b-field>
+            <b-input placeholder="Search..."
+                type="search"
+                icon="magnify"
+                v-model="search"
+                >
+            </b-input>
+        </b-field>
+          
+          </div>
+          
+        </div>
         <section class="section" style="">
         <div class="columns" style="padding:2%;">
             <div class="column is-1"></div>
@@ -35,12 +52,14 @@
 </template>
 
 <script>
-
+import {debounce} from 'lodash'
 export default {
   name: 'Menu',
   data () {
     return {
-      accName: localStorage.accountName
+      accName: localStorage.accountName,
+      search: '',
+      presearch: 0
     }
   },
   components: {
@@ -51,17 +70,37 @@ export default {
       localStorage.setItem('itemId',id)
       this.$store.dispatch('loadItem', id)
       this.$router.push('/item')
+    },
+    debounced: debounce(function (search) {
+      console.log(this.products)
+      if(this.presearch > search){
+      this.products = this.$store.getters.products
+      }
+      this.presearch = search
+      
+      this.products = this.products.filter(product => {
+        return product.name.toLowerCase().includes(this.search.toLowerCase())
+      })
+    }, 1000)
+  },
+  watch: {
+    search: {
+      handler (search) {
+        this.debounced(search)
+      },
+      immediate: true
     }
   },
-  created () {
+  mounted() {
     this.$store.dispatch('fetchProducts')
     this.$store.dispatch('loadCheckout')
     // this.$store.dispatch('fetchCategory')
+    this.products = this.$store.getters.products
   },
   computed: {
-    products () {
-      return this.$store.getters.products
-    },
+    // products () {
+    //   return this.$store.getters.products
+    // },
     maxRow () {
       const products = this.$store.getters.products
       // console.log(products.length/5)
