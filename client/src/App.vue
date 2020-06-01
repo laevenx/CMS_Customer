@@ -7,7 +7,10 @@
     <div id="nav" class="has-background-light">
       <Header />
     </div>
+    <div  id="background">
+    
     <router-view/>
+    </div>
   </div>
 </template>
 
@@ -42,5 +45,9 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+#background{
+  background-color:#dbdbdb;
 }
 </style>

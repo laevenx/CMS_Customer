@@ -1,16 +1,19 @@
 <template>
-<div class="column is-two-thirds is-offset-2">
+<div id="banner" class="column is-two-thirds is-offset-2">
+  <div id="test">
     <b-carousel
         :autoplay="true"
         with-carousel-list
         :indicator="false"
         :overlay="gallery"
         width="800">
+        <div id="banner-list">
         <b-carousel-item v-for="(item, i) in items" :key="i">
             <figure @click="switchGallery(true)" class="image">
                 <img :src="item.image" style="">
             </figure>
         </b-carousel-item>
+        </div>
         <span v-if="gallery" @click="switchGallery(false)" class="modal-close is-small"/>
         <template slot="list" slot-scope="props">
             <b-carousel-list
@@ -27,6 +30,7 @@
             </div>
         </template>
     </b-carousel>
+    </div>
     </div>
 </template>
 
@@ -108,3 +112,14 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+#test{
+  position:relative;
+  border:1px ridge #969595;
+}
+
+#banner-list{
+  border:1px inset #969595;
+}
+</style>
