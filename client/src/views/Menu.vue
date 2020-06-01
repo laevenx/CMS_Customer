@@ -1,8 +1,7 @@
 <template>
     <div>
         <Banner />
-        
-        
+
         <h1 class="is-size-4">welcome, {{accName}}</h1>
         <hr>
         <div class="columns">
@@ -15,9 +14,9 @@
                 >
             </b-input>
         </b-field>
-          
+
           </div>
-          
+
         </div>
         <section class="section" style="">
         <div class="columns" style="padding:2%;">
@@ -33,7 +32,7 @@
             </a>
             </div>
             </div>
-        <div v-for="x in maxRow" class="columns" style="padding:2%;">
+        <div v-for="x in maxRow" v-bind:key="x" class="columns" style="padding:2%;">
             <div class="column is-1"></div>
             <div class="column is-2" v-for="(product,i) in products.slice((x*5),((x*5)+5))" :key="i">
             <a   @click.prevent="showItemDetail(product.id)" >
@@ -52,7 +51,7 @@
 </template>
 
 <script>
-import {debounce} from 'lodash'
+import { debounce } from 'lodash'
 export default {
   name: 'Menu',
   data () {
@@ -66,11 +65,11 @@ export default {
   components: {
     Banner: () => import('../components/Banner.vue')
   },
-  created() {
-        
+  created () {
+
   },
-  mounted() {
-  this.$store.dispatch('fetchProducts')
+  mounted () {
+    this.$store.dispatch('fetchProducts')
     this.$store.dispatch('loadCheckout')
     // this.$store.dispatch('fetchCategory')
     this.products = this.$store.getters.products
@@ -85,7 +84,7 @@ export default {
   },
   methods: {
     showItemDetail (id) {
-      localStorage.setItem('itemId',id)
+      localStorage.setItem('itemId', id)
       this.$store.dispatch('loadItem', id)
       this.$router.push('/item')
     },
@@ -95,14 +94,13 @@ export default {
       this.products = this.$store.getters.products
       // }
       // this.presearch = search
-      
+
       this.products = this.products.filter(product => {
         return product.name.toLowerCase().includes(this.search.toLowerCase())
       })
     }, 2000)
   },
-  
-  
+
   computed: {
     // products () {
     //   return this.$store.getters.products

@@ -8,7 +8,7 @@
       <Header />
     </div>
     <div  id="background">
-    
+
     <router-view/>
     </div>
   </div>
