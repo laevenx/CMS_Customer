@@ -59,29 +59,21 @@ export default {
     return {
       accName: localStorage.accountName,
       search: '',
-      presearch: 0
+      presearch: 0,
+      products: []
     }
   },
   components: {
     Banner: () => import('../components/Banner.vue')
   },
-  methods: {
-    showItemDetail (id) {
-      localStorage.setItem('itemId',id)
-      this.$store.dispatch('loadItem', id)
-      this.$router.push('/item')
-    },
-    debounced: debounce(function (search) {
-      console.log(this.products)
-      if(this.presearch > search){
-      this.products = this.$store.getters.products
-      }
-      this.presearch = search
-      
-      this.products = this.products.filter(product => {
-        return product.name.toLowerCase().includes(this.search.toLowerCase())
-      })
-    }, 1000)
+  created() {
+        
+  },
+  mounted() {
+  this.$store.dispatch('fetchProducts')
+    this.$store.dispatch('loadCheckout')
+    // this.$store.dispatch('fetchCategory')
+    this.products = this.$store.getters.products
   },
   watch: {
     search: {
@@ -91,12 +83,26 @@ export default {
       immediate: true
     }
   },
-  mounted() {
-    this.$store.dispatch('fetchProducts')
-    this.$store.dispatch('loadCheckout')
-    // this.$store.dispatch('fetchCategory')
-    this.products = this.$store.getters.products
+  methods: {
+    showItemDetail (id) {
+      localStorage.setItem('itemId',id)
+      this.$store.dispatch('loadItem', id)
+      this.$router.push('/item')
+    },
+    debounced: debounce(function (search) {
+      console.log(this.products)
+      // if(this.presearch > search){
+      this.products = this.$store.getters.products
+      // }
+      // this.presearch = search
+      
+      this.products = this.products.filter(product => {
+        return product.name.toLowerCase().includes(this.search.toLowerCase())
+      })
+    }, 2000)
   },
+  
+  
   computed: {
     // products () {
     //   return this.$store.getters.products
