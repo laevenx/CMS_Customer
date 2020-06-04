@@ -25,7 +25,7 @@
             <a   @click.prevent="showItemDetail(product.id)" >
                 <div   class="box" width="200" height="200">
                     {{product.name}}<br>
-                    <img v-bind:src="product.image_url" width="128" height="128"><br>
+                    <img v-bind:src="product.image_url" style="width:100px;height:100px;"><br>
                     price:{{product.price}}<br>
                     stock:{{product.stock}}
                 </div>

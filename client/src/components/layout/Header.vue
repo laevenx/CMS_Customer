@@ -9,20 +9,7 @@
             </b-navbar-item>
         </template>
         <template slot="start">
-            <b-navbar-item href="./">
-                Home
-            </b-navbar-item>
-            <b-navbar-item @click.prevent="$router.push('/item')">
-                Items
-            </b-navbar-item>
-            <b-navbar-dropdown label="Info">
-                <b-navbar-item href="#">
-                    About
-                </b-navbar-item>
-                <b-navbar-item href="#">
-                    Contact
-                </b-navbar-item>
-            </b-navbar-dropdown>
+
         </template>
 
         <template slot="end">
