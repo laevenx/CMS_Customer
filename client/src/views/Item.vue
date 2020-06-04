@@ -16,12 +16,13 @@
               <hr class="login-hr has-background-black">
                <b-field label="Actions">
             <b-field grouped>
-
+              <div class="column is-2">
+              </div>
                <b-numberinput
                v-model="stock"
                controls-position="compact"
                 controls-rounded
-                min="1"
+                min="0"
                 v-bind:max="item.stock">
             </b-numberinput>
             <p class="control">
@@ -64,10 +65,13 @@ export default {
         .then(({ data }) => {
           console.log('new cart added')
           this.$buefy.toast.open('new cart added')
-          this.$store.commit('ADD_NUMBERCART')
+          this.$store.dispatch('loadCheckout')
+          // this.$store.commit('ADD_NUMBERCART')
         })
         .catch(err => {
           console.log(err.response.data)
+          err.response.data.error = err.response.data.error.replace('notNull Violation:', '')
+          this.$buefy.toast.open(err.response.data.error)
         })
     }
   },
