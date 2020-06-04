@@ -17,13 +17,13 @@
                 <div class="buttons">
                      <b-button type="is-primary" v-if="!loggedIn" @click.prevent="showlogin" inverted>Log in</b-button>
                     <b-button type="is-primary" v-if="!loggedIn" @click.prevent="showregister" inverted><strong>Register</strong></b-button>
-                     <b-button type="is-primary" v-if="loggedIn" inverted><p class="is-size-5 has-text-dark">{{accName}}</p></b-button>
-                     <b-button type="is-primary" v-if="loggedIn" @click.prevent="showcart" inverted><p class="is-size-4 has-text-dark has-text-weight-semibold"><b-icon
+                     <b-button  size="is-medium" type="is-primary" v-if="loggedIn" inverted><p class="is-size-5 has-text-dark">{{accName}}</p></b-button>
+                     <b-button size="is-medium" type="is-primary" v-if="loggedIn" @click.prevent="showcart" inverted><p class="is-size-4 has-text-dark has-text-weight-semibold"><b-icon
                 icon="cart-outline"
                 size="is-medium"
                 type="is-dark">
             </b-icon> {{numberCart}}</p></b-button>
-                    <b-button type="is-primary" v-if="loggedIn" @click.prevent="logout" inverted><b-icon icon="door-open" type="is-dark" size="is-medium"></b-icon><strong class="is-size-6 has-text-dark">Log Out</strong></b-button>
+                    <b-button size="is-medium" type="is-primary" v-if="loggedIn" @click.prevent="logout" inverted><b-icon icon="door-open" type="is-dark" size="is-medium"></b-icon><strong class="is-size-6 has-text-dark">Log Out</strong></b-button>
                 </div>
             </b-navbar-item>
         </template>
