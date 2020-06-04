@@ -19,7 +19,6 @@
             <b-tab-item label="Login">
                <b-field label="Email">
                             <b-input
-                                type="email"
                                 :value="email"
                                 v-model="loginemail"
                                 placeholder="Your email"
