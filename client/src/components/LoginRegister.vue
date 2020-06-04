@@ -158,13 +158,15 @@ export default {
 
       this.$store.dispatch('register', newUser)
         .then(({ data }) => {
-          this.$store.state.activeTab = 0
+          this.$buefy.toast.open('Register Successful')
+          // this.$store.state.activeTab = 0
+          this.$store.commit('SET_ACTIVETAB', 0)
         })
         .catch(err => {
           console.log(err.response.data)
           this.$buefy.snackbar.open({
             duration: 5000,
-            message: err.response.data.error[0],
+            message: err.response.data.error,
             type: 'is-primary',
             position: 'is-top',
             queue: true

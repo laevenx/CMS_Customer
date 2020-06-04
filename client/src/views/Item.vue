@@ -14,7 +14,7 @@
               <h1>Price : {{item.price}}</h1>
               <h1>Stock : {{item.stock}}</h1>
               <hr class="login-hr has-background-black">
-               <b-field label="Actions">
+               <b-field label="Quantity">
             <b-field grouped>
               <div class="column is-2">
               </div>
